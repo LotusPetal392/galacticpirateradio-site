@@ -15,8 +15,8 @@ async fn main() {
         .route("/", get(index))
         .route("/software", get(software))
         .route("/about", get(about_redirect))
-        .route("/health", get(health))
-        .nest_service("/static", ServeDir::new("static"));
+        .nest_service("/static", ServeDir::new("static"))
+        .fallback(not_found);
 
     let address = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("Listening on http://{address}");
@@ -48,8 +48,15 @@ async fn about_redirect() -> Redirect {
     Redirect::permanent("/software")
 }
 
-async fn health() -> &'static str {
-    "ok"
+async fn not_found() -> impl IntoResponse {
+    (
+        StatusCode::NOT_FOUND,
+        HtmlTemplate(NotFoundTemplate {
+            title: "404 Not Found",
+            current_path: "",
+            current_year: current_year(),
+        }),
+    )
 }
 
 struct HtmlTemplate<T>(T);
@@ -81,6 +88,14 @@ struct IndexTemplate {
 #[derive(Template)]
 #[template(path = "software.html")]
 struct SoftwareTemplate {
+    title: &'static str,
+    current_path: &'static str,
+    current_year: i32,
+}
+
+#[derive(Template)]
+#[template(path = "404.html")]
+struct NotFoundTemplate {
     title: &'static str,
     current_path: &'static str,
     current_year: i32,
