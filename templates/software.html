@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <h2 class="h3 fw-semibold mb-3">Ethereal Waves</h2>
+                <p class="mb-3">
+                    Ethereal Waves is a music program for Linux. It uses the libcosmic toolkit for the UI and GStreamer
+                    for the backend. The source is available on
+                    <a href="https://github.com/cosmic-utils/ethereal-waves">GitHub</a>.
+                </p>
+                <p>Currently supported formats: <strong>MP3, M4A, Ogg, Opus, Flac, Wav</strong></p>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Light%20Mode.png"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves (Light Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Light%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves in light mode"
+                                loading="lazy"
+                            />
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves (Dark Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Dark%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves in dark mode"
+                                loading="lazy"
+                            />
+                        </a>
+                    </div>
+                </div>
+                <br />
+                <p class="mb-2">Planned features include:</p>
+                <ul class="mb-4">
+                    <li>Grid view</li>
+                    <li>Condensed responsive layout</li>
+                    <li>Drag and drop support</li>
+                    <li>Playlist duplicate track management</li>
+                    <li>Partial library update (only adding new tracks)</li>
+                    <li>Exporting playlists as .m3u</li>
+                    <li>Improved MPRIS support</li>
+                    <li>More optional columns</li>
+                    <li>More sorting options</li>
+                    <li>Shuffle modes</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
