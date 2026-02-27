@@ -1,13 +1,50 @@
 {% extends "base.html" %} {% block content %}
-<section class="card site-card shadow-sm border-0">
+<section class="card site-card border-0 transmission-hero mb-4">
     <div class="card-body p-4 p-md-5">
-        <h1 class="display-6 fw-semibold mb-3">Welcome to Galactic Pirate Radio</h1>
-        <p class="mb-3">
-            Welcome to my little corner of the internet. I'm a random person who loves to code and do nerdy things. I'm
-            working on a music player for Linux. Check it out on the software page. Other projects may show up here at
-            some point as well.
-        </p>
-        <a class="btn btn-primary px-4" href="/software"> See the Software Page </a>
+        <div class="transmission-grid">
+            <div>
+                <p class="hero-kicker">[Begin Transmission]</p>
+                <h1 class="display-6 fw-semibold mb-3">Galactic Pirate Radio</h1>
+                <p class="hero-subtext mb-4">
+                    A quiet signal at the edge of charted space. Tune in for broadcasts, archives, and transmission logs
+                    from a hidden outpost.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-outline-secondary px-4" href="/software">Browse Archives</a>
+                </div>
+            </div>
+            <div class="signal-panel">
+                <div class="signal-emblem signal-emblem-portrait">
+                    <div class="signal-logo-frame">
+                        <img
+                            class="signal-logo"
+                            src="/static/images/gpr.png"
+                            alt="Galactic Pirate Radio logo"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="transmission-log p-3 p-md-4">
+    <div class="log-header mb-3">
+        <span class="log-label">Recent Transmissions</span>
+        <span class="log-meter">Signal Strength: ███████░░ 78%</span>
+    </div>
+    <div class="log-entry mb-2">
+        <div class="log-time mb-1">02:14:08</div>
+        <p class="mb-0">Uplink stabilized. Archive index pushed to public relay.</p>
+    </div>
+    <div class="log-entry mb-2">
+        <div class="log-time mb-1">01:52:44</div>
+        <p class="mb-0">Detected repeating pattern in ambient static. Logged as anomaly A-17.</p>
+    </div>
+    <div class="log-entry">
+        <div class="log-time mb-1">00:33:11</div>
+        <p class="mb-0">Scheduled new broadcast: <strong>Deep Space Transmitter</strong>.</p>
     </div>
 </section>
 {% endblock %}

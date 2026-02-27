@@ -40,7 +40,13 @@
       <header>
         <nav class="navbar navbar-expand-lg site-navbar border-bottom">
           <div class="container py-1">
-            <a class="navbar-brand fw-semibold" href="/">Galactic Pirate Radio</a>
+            <a class="navbar-brand fw-semibold" href="/" aria-label="Galactic Pirate Radio Home">
+              <span class="brand-beacon" aria-hidden="true"></span>
+              <span class="brand-stack">
+                <span class="brand-main">Galactic Pirate</span>
+                <span class="brand-sub">Radio // GPR-01</span>
+              </span>
+            </a>
             <button
               class="navbar-toggler"
               type="button"
@@ -58,7 +64,7 @@
                   <a href="/" class="nav-link {% if current_path == "/" %}active{% endif %}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="/software" class="nav-link {% if current_path == "/software" %}active{% endif %}">Software</a>
+                  <a href="/software" class="nav-link {% if current_path == "/software" %}active{% endif %}">Archives</a>
                 </li>
               </ul>
             </div>
@@ -71,9 +77,12 @@
       </main>
 
       <footer class="site-footer border-top">
-        <div class="container py-3 text-center text-body-secondary">
-          <p class="mb-0 small">
-            Copyright &copy; {{ current_year }} LotusPetal
+        <div class="container py-3 text-body-secondary">
+          <p class="mb-0 small footer-console">
+            <span>Node: <strong>Active</strong></span>
+            <span>Uplink: <strong>Stable</strong></span>
+            <span>Signal: <strong>78%</strong></span>
+            <span>Copyright &copy; {{ current_year }} LotusPetal</span>
           </p>
         </div>
       </footer>
