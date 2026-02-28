@@ -1,23 +1,38 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title }} | Galactic Pirate Radio</title>
-    <script>
-      (() => {
-        const media = window.matchMedia("(prefers-color-scheme: dark)");
-        const applyTheme = () => {
-          document.documentElement.setAttribute("data-bs-theme", media.matches ? "dark" : "light");
-        };
-
-        applyTheme();
-        if (media.addEventListener) {
-          media.addEventListener("change", applyTheme);
-        } else {
-          media.addListener(applyTheme);
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}" />
+    <meta name="robots" content="{{ robots }}" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:image" content="{{ og_image_url }}" />
+    <meta property="og:type" content="{{ og_type }}" />
+    <meta property="og:site_name" content="Galactic Pirate Radio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ title }}" />
+    <meta name="twitter:description" content="{{ description }}" />
+    <meta name="twitter:image" content="{{ og_image_url }}" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Galactic Pirate Radio",
+        "url": "{{ site_url }}",
+        "publisher": {
+          "@type": "Organization",
+          "name": "LotusPetal",
+          "url": "{{ site_url }}",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{{ og_image_url }}"
+          }
         }
-      })();
+      }
     </script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -34,6 +49,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/styles.css" />
+    {% block head_extra %}{% endblock %}
   </head>
   <body>
     <div class="page-shell">

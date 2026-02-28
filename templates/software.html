@@ -1,9 +1,34 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block head_extra %}
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Ethereal Waves",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Linux",
+        "url": "{{ canonical_url }}",
+        "image": "{{ og_image_url }}",
+        "author": {
+            "@type": "Organization",
+            "name": "Galactic Pirate Radio"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Galactic Pirate Radio"
+        },
+        "softwareHelp": "https://github.com/cosmic-utils/ethereal-waves"
+    }
+</script>
+{% endblock %} {% block content %}
 <div class="row g-4">
     <div class="col-12">
         <section class="card site-card shadow-sm border-0">
             <div class="card-body p-4 p-md-5">
-                <h2 class="h3 fw-semibold mb-3">Ethereal Waves</h2>
+                <h1 class="h3 fw-semibold mb-3">Ethereal Waves for Linux</h1>
+                <p class="mb-3">
+                    Ethereal Waves is a desktop music player for Linux focused on fast library browsing, playlist
+                    control, and clean playback controls.
+                </p>
                 <p class="mb-3">
                     Ethereal Waves is a music program for Linux. It uses the libcosmic toolkit for the UI and GStreamer
                     for the backend. The source is available on

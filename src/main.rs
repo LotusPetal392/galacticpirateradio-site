@@ -2,8 +2,8 @@ use askama::Template;
 use axum::{
     Router,
     extract::State,
-    http::StatusCode,
-    response::{Html, IntoResponse, Redirect, Response},
+    http::{StatusCode, header},
+    response::{Html, IntoResponse, Response},
     routing::get,
 };
 use serde::{Deserialize, Serialize};
@@ -18,10 +18,13 @@ use tower_http::services::ServeDir;
 const TRANSMISSIONS_PATH: &str = "data/recent_transmissions.json";
 const GENERATION_INTERVAL_SECS: u64 = 3 * 60 * 60;
 const MAX_TRANSMISSIONS: usize = 12;
+const DEFAULT_SITE_URL: &str = "http://127.0.0.1:3000";
+const OG_IMAGE_PATH: &str = "/static/images/gpr.png";
 
 #[derive(Clone)]
 struct AppState {
     transmissions: Arc<RwLock<TransmissionState>>,
+    site_url: String,
 }
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -40,8 +43,13 @@ struct TransmissionEntry {
 #[tokio::main]
 async fn main() {
     let loaded = load_transmissions();
+    let site_url = std::env::var("SITE_URL")
+        .unwrap_or_else(|_| DEFAULT_SITE_URL.to_string())
+        .trim_end_matches('/')
+        .to_string();
     let state = AppState {
         transmissions: Arc::new(RwLock::new(loaded)),
+        site_url,
     };
 
     generate_if_needed_and_persist(&state).await;
@@ -50,7 +58,10 @@ async fn main() {
     let app = Router::new()
         .route("/", get(index))
         .route("/software", get(software))
-        .route("/about", get(about_redirect))
+        .route("/robots.txt", get(robots_txt))
+        .route("/robots.txt/", get(robots_txt))
+        .route("/sitemap.xml", get(sitemap_xml))
+        .route("/sitemap.xml/", get(sitemap_xml))
         .nest_service("/static", ServeDir::new("static"))
         .fallback(not_found)
         .with_state(state);
@@ -71,35 +82,84 @@ async fn index(State(app_state): State<AppState>) -> impl IntoResponse {
         let guard = app_state.transmissions.read().await;
         guard.entries.clone()
     };
+    let canonical_url = absolute_url(&app_state.site_url, "/");
+    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
 
     HtmlTemplate(IndexTemplate {
-        title: "Home",
+        title: "Galactic Pirate Radio",
+        description: "Galactic Pirate Radio broadcasts transmission logs, archives, and updates from a hidden outpost at the edge of charted space.",
         current_path: "/",
         current_year: current_year(),
+        canonical_url,
+        og_image_url,
+        og_type: "website",
+        robots: "index,follow",
+        site_url: app_state.site_url.clone(),
         recent_transmissions,
     })
 }
 
-async fn software() -> impl IntoResponse {
+async fn software(State(app_state): State<AppState>) -> impl IntoResponse {
+    let canonical_url = absolute_url(&app_state.site_url, "/software");
+    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
     HtmlTemplate(SoftwareTemplate {
-        title: "Software",
+        title: "Software | Ethereal Waves",
+        description: "Ethereal Waves is a Linux music player built with libcosmic and GStreamer, with screenshots, feature roadmap, and keyboard shortcuts.",
         current_path: "/software",
         current_year: current_year(),
+        canonical_url,
+        og_image_url,
+        og_type: "software",
+        robots: "index,follow",
+        site_url: app_state.site_url,
     })
 }
 
-async fn about_redirect() -> Redirect {
-    Redirect::permanent("/software")
-}
-
-async fn not_found() -> impl IntoResponse {
+async fn not_found(State(app_state): State<AppState>) -> impl IntoResponse {
+    let canonical_url = absolute_url(&app_state.site_url, "/404");
+    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
     (
         StatusCode::NOT_FOUND,
         HtmlTemplate(NotFoundTemplate {
             title: "404 Not Found",
+            description: "The requested Galactic Pirate Radio page could not be found.",
             current_path: "",
             current_year: current_year(),
+            canonical_url,
+            og_image_url,
+            og_type: "website",
+            robots: "noindex,follow",
+            site_url: app_state.site_url,
         }),
+    )
+}
+
+async fn robots_txt(State(app_state): State<AppState>) -> impl IntoResponse {
+    let body = format!(
+        "User-agent: *\nAllow: /\nSitemap: {}/sitemap.xml\n",
+        app_state.site_url
+    );
+    ([(header::CONTENT_TYPE, "text/plain; charset=utf-8")], body)
+}
+
+async fn sitemap_xml(State(app_state): State<AppState>) -> impl IntoResponse {
+    let home = absolute_url(&app_state.site_url, "/");
+    let software = absolute_url(&app_state.site_url, "/software");
+    let body = format!(
+        r#"<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{home}</loc>
+  </url>
+  <url>
+    <loc>{software}</loc>
+  </url>
+</urlset>
+"#
+    );
+    (
+        [(header::CONTENT_TYPE, "application/xml; charset=utf-8")],
+        body,
     )
 }
 
@@ -125,8 +185,14 @@ where
 #[template(path = "index.html")]
 struct IndexTemplate {
     title: &'static str,
+    description: &'static str,
     current_path: &'static str,
     current_year: i32,
+    canonical_url: String,
+    og_image_url: String,
+    og_type: &'static str,
+    robots: &'static str,
+    site_url: String,
     recent_transmissions: Vec<TransmissionEntry>,
 }
 
@@ -134,16 +200,32 @@ struct IndexTemplate {
 #[template(path = "software.html")]
 struct SoftwareTemplate {
     title: &'static str,
+    description: &'static str,
     current_path: &'static str,
     current_year: i32,
+    canonical_url: String,
+    og_image_url: String,
+    og_type: &'static str,
+    robots: &'static str,
+    site_url: String,
 }
 
 #[derive(Template)]
 #[template(path = "404.html")]
 struct NotFoundTemplate {
     title: &'static str,
+    description: &'static str,
     current_path: &'static str,
     current_year: i32,
+    canonical_url: String,
+    og_image_url: String,
+    og_type: &'static str,
+    robots: &'static str,
+    site_url: String,
+}
+
+fn absolute_url(site_url: &str, path: &str) -> String {
+    format!("{site_url}{path}")
 }
 
 fn current_year() -> i32 {
