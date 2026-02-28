@@ -80,7 +80,7 @@ async fn index(State(app_state): State<AppState>) -> impl IntoResponse {
     generate_if_needed_and_persist(&app_state).await;
     let recent_transmissions = {
         let guard = app_state.transmissions.read().await;
-        guard.entries.clone()
+        guard.entries.iter().take(5).cloned().collect()
     };
     let canonical_url = absolute_url(&app_state.site_url, "/");
     let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
