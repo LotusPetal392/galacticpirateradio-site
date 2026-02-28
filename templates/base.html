@@ -64,7 +64,7 @@
                   <a href="/" class="nav-link {% if current_path == "/" %}active{% endif %}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="/software" class="nav-link {% if current_path == "/software" %}active{% endif %}">Archives</a>
+                  <a href="/software" class="nav-link {% if current_path == "/software" %}active{% endif %}">Software</a>
                 </li>
               </ul>
             </div>
@@ -81,7 +81,7 @@
           <p class="mb-0 small footer-console">
             <span>Node: <strong>Active</strong></span>
             <span>Uplink: <strong>Stable</strong></span>
-            <span>Signal: <strong>78%</strong></span>
+            <span>Signal: <strong id="footerSignalStrengthValue">78%</strong></span>
             <span>Copyright &copy; {{ current_year }} LotusPetal</span>
           </p>
         </div>

@@ -10,7 +10,7 @@
                     from a hidden outpost.
                 </p>
                 <div class="hero-actions">
-                    <a class="btn btn-outline-secondary px-4" href="/software">Browse Archives</a>
+                    <a class="btn btn-outline-secondary px-4" href="/software">Software</a>
                 </div>
             </div>
             <div class="signal-panel">
@@ -31,20 +31,49 @@
 
 <section class="transmission-log p-3 p-md-4">
     <div class="log-header mb-3">
-        <span class="log-label">Recent Transmissions</span>
-        <span class="log-meter">Signal Strength: ███████░░ 78%</span>
+        <span class="log-label">[Recent Transmissions]</span>
+        <span class="log-meter">
+            Signal Strength:
+            <span id="signalStrengthBars">███████░░░</span>
+            <span id="signalStrengthValue">78%</span>
+        </span>
     </div>
-    <div class="log-entry mb-2">
-        <div class="log-time mb-1">02:14:08</div>
-        <p class="mb-0">Uplink stabilized. Archive index pushed to public relay.</p>
+    {% for transmission in recent_transmissions %}
+    <div class="log-entry {% if !loop.last %}mb-2{% endif %}">
+        <div class="log-time mb-1">{{ transmission.time_label }}</div>
+        <p class="mb-0">{{ transmission.message }}</p>
     </div>
-    <div class="log-entry mb-2">
-        <div class="log-time mb-1">01:52:44</div>
-        <p class="mb-0">Detected repeating pattern in ambient static. Logged as anomaly A-17.</p>
-    </div>
-    <div class="log-entry">
-        <div class="log-time mb-1">00:33:11</div>
-        <p class="mb-0">Scheduled new broadcast: <strong>Deep Space Transmitter</strong>.</p>
-    </div>
+    {% endfor %}
 </section>
+<script>
+    (() => {
+        const barsEl = document.getElementById("signalStrengthBars");
+        const valueEl = document.getElementById("signalStrengthValue");
+        if (!barsEl || !valueEl) return;
+
+        let strength = 78;
+        const min = 72;
+        const max = 86;
+        const stepOptions = [-2, -1, 0, 1, 2];
+
+        const render = () => {
+            const filled = Math.max(0, Math.min(10, Math.round(strength / 10)));
+            barsEl.textContent = `${"█".repeat(filled)}${"░".repeat(10 - filled)}`;
+            valueEl.textContent = `${strength}%`;
+            const footerValueEl = document.getElementById("footerSignalStrengthValue");
+            if (footerValueEl) {
+                footerValueEl.textContent = `${strength}%`;
+            }
+        };
+
+        const tick = () => {
+            const step = stepOptions[Math.floor(Math.random() * stepOptions.length)];
+            strength = Math.max(min, Math.min(max, strength + step));
+            render();
+        };
+
+        render();
+        setInterval(tick, 3500);
+    })();
+</script>
 {% endblock %}
