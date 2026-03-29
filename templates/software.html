@@ -35,10 +35,11 @@
                         >GitHub</a
                     >.
                 </p>
-                <p>
+                <p class="mb-3">
                     Currently supported formats:
                     <strong>MP3, M4A, Ogg, Opus, Flac, Wav</strong>
                 </p>
+                <p class="mb-3"><a href="/static/Ethereal Waves - Release Notes.txt">Release Notes</a></p>
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <a
@@ -70,18 +71,21 @@
                     </div>
                 </div>
                 <br />
-                <p class="mb-2">Planned features include:</p>
+                <p class="mb-2">Planned features (non-exhaustive and in no particular order):</p>
                 <ul class="mb-4">
-                    <li>Grid view</li>
-                    <li>Condensed responsive layout</li>
-                    <li>Drag and drop support</li>
-                    <li>Playlist duplicate track management</li>
-                    <li>Partial library update (only adding new tracks)</li>
-                    <li>Exporting playlists as .m3u</li>
-                    <li>Improved MPRIS support</li>
-                    <li>More optional columns</li>
-                    <li>More sorting options</li>
-                    <li>Shuffle modes</li>
+                     <li><input type="checkbox" checked aria-checked="true" onclick="return false;">&nbsp;Gapless playback</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Crossfading between tracks</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Grid view</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;More column options in list view</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Import / Export .m3u playlists</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Improved MPRIS support (much improved but not entirely complete)</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Sorting options</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Shuffle modes</li>
+                     <li><input type="checkbox" checked aria-checked="true" onclick="return false;">&nbsp;Condensed responsive layout (it's possible the list view may be made responsive later)</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;More keyboard shortcuts</li>
+                     <li><input type="checkbox" checked aria-checked="true" onclick="return false;">&nbsp;Drag and drop support (your milage may vary outside of cosmic-comp)</li>
+                     <li><input type="checkbox" checked aria-checked="true" onclick="return false;">&nbsp;Playlist duplicate management</li>
+                     <li><input type="checkbox" onclick="return false;">&nbsp;Partial update (Only add new tracks)</li>
                 </ul>
 
                 <p class="mb-2">Keybindings</p>
@@ -100,6 +104,10 @@
                     <li><strong>Ctrl + A:</strong> Select All</li>
                     <li><strong>Ctrl + click:</strong> Select</li>
                     <li><strong>Shift + click:</strong> Select Range</li>
+                    <li><strong>F1:</strong> Track Info</li>
+                    <li><strong>m:</strong> Toggle Mute</li>
+                    <li><strong>-:</strong> Volume Down</li>
+                    <li><strong>=:</strong> Volume Up and Unmute</li>
                 </ul>
             </div>
         </section>

@@ -4,13 +4,17 @@
         <div class="transmission-grid">
             <div>
                 <p class="hero-kicker">[Begin Transmission]</p>
-                <h1 class="display-6 fw-semibold mb-3">Galactic Pirate Radio</h1>
+                <h1 class="display-6 fw-semibold mb-3">
+                    Galactic Pirate Radio
+                </h1>
                 <p class="hero-subtext mb-4">
-                    A quiet signal at the edge of charted space. Tune in for broadcasts, archives, and transmission logs
-                    from a hidden outpost.
+                    A quiet signal at the edge of charted space. Home of
+                    Ethereal Waves. Be sure to check back for new transmissions.
                 </p>
                 <div class="hero-actions">
-                    <a class="btn btn-outline-secondary px-4" href="/software">Software</a>
+                    <a class="btn btn-outline-secondary px-4" href="/software"
+                        >Software</a
+                    >
                 </div>
             </div>
             <div class="signal-panel">
@@ -60,14 +64,17 @@
             const filled = Math.max(0, Math.min(10, Math.round(strength / 10)));
             barsEl.textContent = `${"█".repeat(filled)}${"░".repeat(10 - filled)}`;
             valueEl.textContent = `${strength}%`;
-            const footerValueEl = document.getElementById("footerSignalStrengthValue");
+            const footerValueEl = document.getElementById(
+                "footerSignalStrengthValue",
+            );
             if (footerValueEl) {
                 footerValueEl.textContent = `${strength}%`;
             }
         };
 
         const tick = () => {
-            const step = stepOptions[Math.floor(Math.random() * stepOptions.length)];
+            const step =
+                stepOptions[Math.floor(Math.random() * stepOptions.length)];
             strength = Math.max(min, Math.min(max, strength + step));
             render();
         };

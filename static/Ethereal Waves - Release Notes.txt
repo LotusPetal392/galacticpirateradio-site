@@ -1,0 +1,19 @@
+0.2.2
++ Fixed sending incorrect URL for MPRIS artwork
++ Fixed global hotkeys during search
++ Performance improvement on tick
++ Fixed list view row mismatch when searching
++ Fixed MPRIS initialization bug when MPRIS is unavailable
++ Fixed issue with MPRIS updating shuffle
++ Fixed mute state / UI sync issue
++ Fixed playlist dialog text input inconsistency
+
+0.2.1
++ Fixed an issue with list view track ids
+
+0.2.0
++ Updated Ukranian translations
++ Added column reordering
++ Added new columns (Track Total, Disc Number, Disc Total, Duration, File Path, Genre)
++ Added Volume/Mute control to menu
++ Added keyboard control for Volume/Mute
