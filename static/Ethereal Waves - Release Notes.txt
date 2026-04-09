@@ -1,3 +1,14 @@
+0.3.1
++ Added separate zoom levels for grid and list view
++ Footer artwork is now draggable
++ Consolidated string and time functions
+
+0.3.0
++ Added Grid View
++ Added case-sensitivity sorting toggle
++ Increased number of Track Info tracks
++ Artwork cache now removes unused artwork
+
 0.2.2
 + Fixed sending incorrect URL for MPRIS artwork
 + Fixed global hotkeys during search
