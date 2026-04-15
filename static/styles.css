@@ -211,7 +211,7 @@ header {
     position: relative;
     display: block;
     width: 100%;
-    max-width: 100%;
+    max-width: 300px;
     margin-inline: auto;
     overflow: hidden;
     border: 1px solid var(--line);
