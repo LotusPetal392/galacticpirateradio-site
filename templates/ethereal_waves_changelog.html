@@ -1,0 +1,100 @@
+{% extends "base.html" %} {% block head_extra %}
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Ethereal Waves Changelog",
+        "url": "{{ canonical_url }}",
+        "description": "Release history and changelog entries for the Ethereal Waves Linux music player.",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Galactic Pirate Radio",
+            "url": "{{ site_url }}"
+        }
+    }
+</script>
+{% endblock %} {% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Release history</p>
+                <h1 class="h2 fw-semibold mb-3">Ethereal Waves changelog</h1>
+                <p class="mb-4">
+                    This page summarizes public changes for Ethereal Waves. For the
+                    main overview, screenshots, formats, and installation notes,
+                    visit the <a href="/ethereal-waves">Ethereal Waves product page</a>.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="/ethereal-waves">Back to Ethereal Waves</a>
+                    <a class="btn btn-outline-secondary" href="/static/Ethereal%20Waves%20-%20Release%20Notes.txt">Open raw release notes</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5 changelog-list">
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.4.0</p>
+                    <ul class="feature-list mb-0">
+                        <li>Added crossfading between tracks</li>
+                    </ul>
+                </article>
+
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.3.1</p>
+                    <ul class="feature-list mb-0">
+                        <li>Added separate zoom levels for grid view and list view</li>
+                        <li>Made footer artwork draggable</li>
+                        <li>Consolidated string and time functions</li>
+                    </ul>
+                </article>
+
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.3.0</p>
+                    <ul class="feature-list mb-0">
+                        <li>Added grid view</li>
+                        <li>Added case-sensitive sorting toggle</li>
+                        <li>Increased the number of tracks shown in Track Info</li>
+                        <li>Updated artwork cache cleanup for unused artwork</li>
+                    </ul>
+                </article>
+
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.2.2</p>
+                    <ul class="feature-list mb-0">
+                        <li>Fixed incorrect URL handling for MPRIS artwork</li>
+                        <li>Fixed global hotkeys during search</li>
+                        <li>Improved tick performance</li>
+                        <li>Fixed list view row mismatch when searching</li>
+                        <li>Fixed MPRIS initialization when MPRIS is unavailable</li>
+                        <li>Fixed shuffle updates for MPRIS</li>
+                        <li>Fixed mute state and UI sync issues</li>
+                        <li>Fixed playlist dialog text input inconsistency</li>
+                    </ul>
+                </article>
+
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.2.1</p>
+                    <ul class="feature-list mb-0">
+                        <li>Fixed an issue with list view track IDs</li>
+                    </ul>
+                </article>
+
+                <article class="changelog-entry">
+                    <p class="eyebrow">Version 0.2.0</p>
+                    <ul class="feature-list mb-0">
+                        <li>Updated Ukrainian translations</li>
+                        <li>Added column reordering</li>
+                        <li>Added new columns including track total, disc number, disc total, duration, file path, and genre</li>
+                        <li>Added volume and mute controls to the menu</li>
+                        <li>Added keyboard control for volume and mute</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

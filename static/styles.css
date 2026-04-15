@@ -211,7 +211,7 @@ header {
     position: relative;
     display: block;
     width: 100%;
-    max-width: 250px;
+    max-width: 100%;
     margin-inline: auto;
     overflow: hidden;
     border: 1px solid var(--line);
@@ -556,4 +556,128 @@ code {
         justify-content: flex-start;
         gap: 0.7rem;
     }
+}
+
+
+.feature-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.feature-list li + li {
+    margin-top: 0.55rem;
+}
+
+.software-intro {
+    color: var(--ink);
+    max-width: 52rem;
+}
+
+.software-actions {
+    row-gap: 0.75rem;
+}
+
+.screenshot-help {
+    color: var(--muted) !important;
+}
+
+.command-pre {
+    margin: 0 0 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.85rem;
+    background: rgba(4, 8, 18, 0.42);
+    color: var(--ink);
+    overflow-x: auto;
+}
+
+.command-pre code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+}
+
+.check-list,
+.shortcut-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.check-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(93, 244, 255, 0.08);
+}
+
+.check-list li:last-child {
+    border-bottom: 0;
+}
+
+.check-state {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 5.25rem;
+    padding: 0.18rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: "Exo 2", "Trebuchet MS", Verdana, sans-serif;
+}
+
+.check-state.is-done {
+    background: rgba(93, 244, 255, 0.16);
+    color: var(--accent-hover);
+}
+
+.check-state.is-pending {
+    background: rgba(159, 177, 197, 0.12);
+    color: var(--muted);
+}
+
+.shortcut-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(93, 244, 255, 0.08);
+}
+
+.shortcut-list li:first-child {
+    padding-top: 0;
+}
+
+.shortcut-list li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.shortcut-list strong {
+    font-family: "Exo 2", "Trebuchet MS", Verdana, sans-serif;
+    color: var(--accent-hover);
+}
+
+.shortcut-list span {
+    color: var(--muted);
+}
+
+.changelog-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.changelog-entry {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(93, 244, 255, 0.1);
+}
+
+.changelog-entry:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
 }

@@ -1,3 +1,6 @@
+0.4.0
++ Added crossfading between tracks
+
 0.3.1
 + Added separate zoom levels for grid and list view
 + Footer artwork is now draggable

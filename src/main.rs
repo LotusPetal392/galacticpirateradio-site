@@ -3,7 +3,7 @@ use axum::{
     Router,
     extract::State,
     http::{StatusCode, header},
-    response::{Html, IntoResponse, Response},
+    response::{Html, IntoResponse, Redirect, Response},
     routing::get,
 };
 use serde::{Deserialize, Serialize};
@@ -19,7 +19,9 @@ const TRANSMISSIONS_PATH: &str = "data/recent_transmissions.json";
 const GENERATION_INTERVAL_SECS: u64 = 3 * 60 * 60;
 const MAX_TRANSMISSIONS: usize = 12;
 const DEFAULT_SITE_URL: &str = "http://127.0.0.1:3000";
-const OG_IMAGE_PATH: &str = "/static/images/gpr.png";
+const HOME_OG_IMAGE_PATH: &str = "/static/images/gpr.png";
+const ETHEREAL_WAVES_OG_IMAGE_PATH: &str =
+    "/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png";
 
 #[derive(Clone)]
 struct AppState {
@@ -57,7 +59,12 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(index))
-        .route("/software", get(software))
+        .route("/ethereal-waves", get(ethereal_waves))
+        .route("/ethereal-waves/", get(ethereal_waves))
+        .route("/ethereal-waves/changelog", get(ethereal_waves_changelog))
+        .route("/ethereal-waves/changelog/", get(ethereal_waves_changelog))
+        .route("/software", get(legacy_software_redirect))
+        .route("/software/", get(legacy_software_redirect))
         .route("/robots.txt", get(robots_txt))
         .route("/robots.txt/", get(robots_txt))
         .route("/sitemap.xml", get(sitemap_xml))
@@ -83,11 +90,11 @@ async fn index(State(app_state): State<AppState>) -> impl IntoResponse {
         guard.entries.iter().take(5).cloned().collect()
     };
     let canonical_url = absolute_url(&app_state.site_url, "/");
-    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
+    let og_image_url = absolute_url(&app_state.site_url, HOME_OG_IMAGE_PATH);
 
     HtmlTemplate(IndexTemplate {
-        title: "Galactic Pirate Radio",
-        description: "Galactic Pirate Radio broadcasts transmission logs, archives, and updates from a hidden outpost at the edge of charted space.",
+        title: "Galactic Pirate Radio | Home of Ethereal Waves",
+        description: "Galactic Pirate Radio is the home of Ethereal Waves, a Linux music player for local audio files built with libcosmic and GStreamer.",
         current_path: "/",
         current_year: current_year(),
         canonical_url,
@@ -99,25 +106,47 @@ async fn index(State(app_state): State<AppState>) -> impl IntoResponse {
     })
 }
 
-async fn software(State(app_state): State<AppState>) -> impl IntoResponse {
-    let canonical_url = absolute_url(&app_state.site_url, "/software");
-    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
-    HtmlTemplate(SoftwareTemplate {
-        title: "Software | Ethereal Waves",
-        description: "Ethereal Waves is a Linux music player built with libcosmic and GStreamer, with screenshots, feature roadmap, and keyboard shortcuts.",
-        current_path: "/software",
+async fn ethereal_waves(State(app_state): State<AppState>) -> impl IntoResponse {
+    let canonical_url = absolute_url(&app_state.site_url, "/ethereal-waves");
+    let og_image_url = absolute_url(&app_state.site_url, ETHEREAL_WAVES_OG_IMAGE_PATH);
+
+    HtmlTemplate(EtherealWavesTemplate {
+        title: "Ethereal Waves Music Player for Linux | Galactic Pirate Radio",
+        description: "Ethereal Waves is a Linux music player for local audio files built with libcosmic and GStreamer, with screenshots, installation steps, shortcuts, and a public changelog.",
+        current_path: "/ethereal-waves",
         current_year: current_year(),
         canonical_url,
         og_image_url,
-        og_type: "software",
+        og_type: "website",
         robots: "index,follow",
-        site_url: app_state.site_url,
+        site_url: app_state.site_url.clone(),
     })
+}
+
+async fn ethereal_waves_changelog(State(app_state): State<AppState>) -> impl IntoResponse {
+    let canonical_url = absolute_url(&app_state.site_url, "/ethereal-waves/changelog");
+    let og_image_url = absolute_url(&app_state.site_url, ETHEREAL_WAVES_OG_IMAGE_PATH);
+
+    HtmlTemplate(EtherealWavesChangelogTemplate {
+        title: "Ethereal Waves Changelog | Galactic Pirate Radio",
+        description: "Changelog and release history for Ethereal Waves, the Linux music player built with libcosmic and GStreamer.",
+        current_path: "/ethereal-waves",
+        current_year: current_year(),
+        canonical_url,
+        og_image_url,
+        og_type: "article",
+        robots: "index,follow",
+        site_url: app_state.site_url.clone(),
+    })
+}
+
+async fn legacy_software_redirect() -> impl IntoResponse {
+    Redirect::permanent("/ethereal-waves")
 }
 
 async fn not_found(State(app_state): State<AppState>) -> impl IntoResponse {
     let canonical_url = absolute_url(&app_state.site_url, "/404");
-    let og_image_url = absolute_url(&app_state.site_url, OG_IMAGE_PATH);
+    let og_image_url = absolute_url(&app_state.site_url, HOME_OG_IMAGE_PATH);
     (
         StatusCode::NOT_FOUND,
         HtmlTemplate(NotFoundTemplate {
@@ -144,7 +173,8 @@ async fn robots_txt(State(app_state): State<AppState>) -> impl IntoResponse {
 
 async fn sitemap_xml(State(app_state): State<AppState>) -> impl IntoResponse {
     let home = absolute_url(&app_state.site_url, "/");
-    let software = absolute_url(&app_state.site_url, "/software");
+    let ethereal_waves = absolute_url(&app_state.site_url, "/ethereal-waves");
+    let changelog = absolute_url(&app_state.site_url, "/ethereal-waves/changelog");
     let body = format!(
         r#"<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -152,7 +182,10 @@ async fn sitemap_xml(State(app_state): State<AppState>) -> impl IntoResponse {
     <loc>{home}</loc>
   </url>
   <url>
-    <loc>{software}</loc>
+    <loc>{ethereal_waves}</loc>
+  </url>
+  <url>
+    <loc>{changelog}</loc>
   </url>
 </urlset>
 "#
@@ -197,8 +230,22 @@ struct IndexTemplate {
 }
 
 #[derive(Template)]
-#[template(path = "software.html")]
-struct SoftwareTemplate {
+#[template(path = "etherealwaves.html")]
+struct EtherealWavesTemplate {
+    title: &'static str,
+    description: &'static str,
+    current_path: &'static str,
+    current_year: i32,
+    canonical_url: String,
+    og_image_url: String,
+    og_type: &'static str,
+    robots: &'static str,
+    site_url: String,
+}
+
+#[derive(Template)]
+#[template(path = "ethereal_waves_changelog.html")]
+struct EtherealWavesChangelogTemplate {
     title: &'static str,
     description: &'static str,
     current_path: &'static str,

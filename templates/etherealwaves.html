@@ -1,0 +1,248 @@
+{% extends "base.html" %} {% block head_extra %}
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Ethereal Waves",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Linux",
+        "url": "{{ canonical_url }}",
+        "description": "Ethereal Waves is a Linux music player for local audio files built with libcosmic and GStreamer.",
+        "image": "{{ og_image_url }}",
+        "screenshot": [
+            "{{ site_url }}/static/images/Ethereal%20Waves%20-%20Light%20Mode.png",
+            "{{ site_url }}/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png",
+            "{{ site_url }}/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Light%20Mode.jpg",
+            "{{ site_url }}/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Dark%20Mode.jpg"
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "LotusPetal"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Galactic Pirate Radio"
+        },
+        "sameAs": "https://github.com/cosmic-utils/ethereal-waves",
+        "softwareHelp": "https://github.com/cosmic-utils/ethereal-waves",
+        "isAccessibleForFree": true
+    }
+</script>
+{% endblock %} {% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Linux music player</p>
+                <h1 class="h2 fw-semibold mb-3">Ethereal Waves music player for Linux</h1>
+                <p class="lead mb-3 software-intro">
+                    Ethereal Waves is a local music player built with
+                    <strong>libcosmic</strong> for the interface and
+                    <strong>GStreamer</strong> for audio playback.
+                </p>
+                <p class="mb-4">
+                    It is designed for browsing and playing personal music
+                    libraries, managing playlists. Ethereal Waves currently supports
+                    <strong>MP3, M4A, Ogg, Opus, FLAC, and WAV</strong> audio files.
+                </p>
+                <div class="hero-actions software-actions">
+                    <a class="btn btn-primary" href="https://github.com/cosmic-utils/ethereal-waves">View source on GitHub</a>
+                    <a class="btn btn-outline-secondary" href="/ethereal-waves/changelog">Read the changelog</a>
+                    <a class="btn btn-outline-secondary" href="/static/Ethereal%20Waves%20-%20Release%20Notes.txt">Raw release notes</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12 col-lg-8">
+        <section class="card site-card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Why people visit this page</p>
+                <h2 class="h4 fw-semibold mb-3">What makes Ethereal Waves different</h2>
+                <ul class="feature-list mb-0">
+                    <li>Focused on local audio playback instead of streaming services</li>
+                    <li>Built for Linux and the COSMIC desktop ecosystem</li>
+                    <li>Offers list and grid views for browsing music libraries</li>
+                    <li>Includes playlist tools, drag and drop support, and keyboard shortcuts</li>
+                    <li>Actively evolving with changelog entries and roadmap items</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-lg-4">
+        <section class="card site-card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Supported audio formats</p>
+                <ul class="feature-list mb-0">
+                    <li>MP3</li>
+                    <li>M4A</li>
+                    <li>Ogg</li>
+                    <li>Opus</li>
+                    <li>FLAC</li>
+                    <li>WAV</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2 mb-4">
+                    <div>
+                        <p class="eyebrow">Screenshots</p>
+                        <h2 class="h4 fw-semibold mb-0">Ethereal Waves interface preview</h2>
+                    </div>
+                    <p class="mb-0 text-body-secondary screenshot-help">Tap or click any image to view it larger.</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Light%20Mode.png"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves - List View (Light Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Light%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves music player list view in light mode"
+                                loading="lazy"
+                            />
+                            <span class="software-shot-caption">List view · light</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves - List View (Dark Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Dark%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves music player list view in dark mode"
+                                loading="lazy"
+                            />
+                            <span class="software-shot-caption">List view · dark</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Light%20Mode.jpg"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves - Grid View (Light Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Light%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves music player grid view in light mode"
+                                loading="lazy"
+                            />
+                            <span class="software-shot-caption">Grid view · light</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a
+                            class="software-shot js-lightbox"
+                            href="/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Dark%20Mode.jpg"
+                            data-gallery="ethereal-waves"
+                            data-glightbox="title: Ethereal Waves - Grid View (Dark Mode)"
+                        >
+                            <img
+                                src="/static/images/Ethereal%20Waves%20-%20Grid%20View%20-%20Dark%20Mode_thumbnail.jpg"
+                                alt="Ethereal Waves music player grid view in dark mode"
+                                loading="lazy"
+                            />
+                            <span class="software-shot-caption">Grid view · dark</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <section class="card site-card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Install and build</p>
+                <h2 class="h4 fw-semibold mb-3">Getting started with Ethereal Waves</h2>
+                <p class="mb-3">
+                    The project currently documents a <code>just</code>-based build
+                    workflow for Linux development and installation.
+                </p>
+                <p class="mb-2 fw-semibold">Run development mode</p>
+                <pre class="command-pre"><code>just run-dev</code></pre>
+                <p class="mb-2 fw-semibold">Install build tooling</p>
+                <pre class="command-pre"><code>sudo apt install just</code></pre>
+                <p class="mb-2 fw-semibold">Build and install</p>
+                <pre class="command-pre"><code>just build-release
+sudo just install</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <section class="card site-card shadow-sm border-0 h-100">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Roadmap</p>
+                <h2 class="h4 fw-semibold mb-3">Current development status</h2>
+                <ul class="check-list mb-0">
+                    <li><span class="check-state is-done">Done</span> Gapless playback</li>
+                    <li><span class="check-state is-done">Done</span> Crossfading between tracks</li>
+                    <li><span class="check-state is-done">Done</span> Grid view</li>
+                    <li><span class="check-state is-done">Done</span> More column options in list view</li>
+                    <li><span class="check-state is-pending">Planned</span> Import and export <code>.m3u</code> playlists</li>
+                    <li><span class="check-state is-pending">In progress</span> MPRIS support improvements</li>
+                    <li><span class="check-state is-pending">Planned</span> Sorting options</li>
+                    <li><span class="check-state is-pending">Planned</span> Shuffle modes</li>
+                    <li><span class="check-state is-done">Done</span> Condensed responsive layout</li>
+                    <li><span class="check-state is-done">Done</span> Drag and drop support</li>
+                    <li><span class="check-state is-done">Done</span> Playlist duplicate management</li>
+                    <li><span class="check-state is-pending">Planned</span> Partial library updates for new tracks</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Keyboard shortcuts</p>
+                <h2 class="h4 fw-semibold mb-3">Common Ethereal Waves keybindings</h2>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="shortcut-list mb-0">
+                            <li><strong>Ctrl + U</strong><span>Update library</span></li>
+                            <li><strong>Ctrl + Q</strong><span>Quit</span></li>
+                            <li><strong>Ctrl + N</strong><span>New playlist</span></li>
+                            <li><strong>F2</strong><span>Rename playlist</span></li>
+                            <li><strong>Ctrl + Up</strong><span>Move playlist up</span></li>
+                            <li><strong>Ctrl + Down</strong><span>Move playlist down</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="shortcut-list mb-0">
+                            <li><strong>Ctrl + =</strong><span>Zoom in</span></li>
+                            <li><strong>Ctrl + -</strong><span>Zoom out</span></li>
+                            <li><strong>PageUp</strong><span>Scroll up</span></li>
+                            <li><strong>PageDown</strong><span>Scroll down</span></li>
+                            <li><strong>Ctrl + ,</strong><span>Settings</span></li>
+                            <li><strong>Ctrl + A</strong><span>Select all</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <ul class="shortcut-list mb-0">
+                            <li><strong>Ctrl + click</strong><span>Select</span></li>
+                            <li><strong>Shift + click</strong><span>Select range</span></li>
+                            <li><strong>F1</strong><span>Track info</span></li>
+                            <li><strong>m</strong><span>Toggle mute</span></li>
+                            <li><strong>-</strong><span>Volume down</span></li>
+                            <li><strong>=</strong><span>Volume up and unmute</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
