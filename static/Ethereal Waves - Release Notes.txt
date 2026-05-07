@@ -1,3 +1,9 @@
+0.4.1
++ Grid view artwork size is now selectable
++ Added thumbnail pipeline
++ Changed max crossfade time to 30 seconds
++ Fixed panic when playing an empty library
+
 0.4.0
 + Added crossfading between tracks
 
