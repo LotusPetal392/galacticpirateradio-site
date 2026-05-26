@@ -16,12 +16,12 @@ use tokio::sync::RwLock;
 use tower_http::services::ServeDir;
 
 const TRANSMISSIONS_PATH: &str = "data/recent_transmissions.json";
+const RELEASE_NOTES_PATH: &str = "static/Ethereal Waves - Release Notes.md";
 const GENERATION_INTERVAL_SECS: u64 = 3 * 60 * 60;
 const MAX_TRANSMISSIONS: usize = 12;
 const DEFAULT_SITE_URL: &str = "http://127.0.0.1:3000";
 const HOME_OG_IMAGE_PATH: &str = "/static/images/gpr.png";
-const ETHEREAL_WAVES_OG_IMAGE_PATH: &str =
-    "/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png";
+const ETHEREAL_WAVES_OG_IMAGE_PATH: &str = "/static/images/Ethereal%20Waves%20-%20Dark%20Mode.png";
 
 #[derive(Clone)]
 struct AppState {
@@ -126,6 +126,8 @@ async fn ethereal_waves(State(app_state): State<AppState>) -> impl IntoResponse 
 async fn ethereal_waves_changelog(State(app_state): State<AppState>) -> impl IntoResponse {
     let canonical_url = absolute_url(&app_state.site_url, "/ethereal-waves/changelog");
     let og_image_url = absolute_url(&app_state.site_url, ETHEREAL_WAVES_OG_IMAGE_PATH);
+    let release_entries = load_release_notes();
+    let release_notes_available = !release_entries.is_empty();
 
     HtmlTemplate(EtherealWavesChangelogTemplate {
         title: "Ethereal Waves Changelog | Galactic Pirate Radio",
@@ -137,6 +139,8 @@ async fn ethereal_waves_changelog(State(app_state): State<AppState>) -> impl Int
         og_type: "article",
         robots: "index,follow",
         site_url: app_state.site_url.clone(),
+        release_notes_available,
+        release_entries,
     })
 }
 
@@ -255,6 +259,8 @@ struct EtherealWavesChangelogTemplate {
     og_type: &'static str,
     robots: &'static str,
     site_url: String,
+    release_notes_available: bool,
+    release_entries: Vec<ReleaseEntry>,
 }
 
 #[derive(Template)]
@@ -269,6 +275,139 @@ struct NotFoundTemplate {
     og_type: &'static str,
     robots: &'static str,
     site_url: String,
+}
+
+#[derive(Clone)]
+struct ReleaseEntry {
+    version: String,
+    anchor_id: String,
+    sections: Vec<ReleaseSection>,
+}
+
+#[derive(Clone)]
+struct ReleaseSection {
+    title: String,
+    items: Vec<String>,
+}
+
+fn load_release_notes() -> Vec<ReleaseEntry> {
+    match fs::read_to_string(RELEASE_NOTES_PATH) {
+        Ok(markdown) => parse_release_notes_markdown(&markdown),
+        Err(error) => {
+            eprintln!("failed to read release notes from {RELEASE_NOTES_PATH}: {error}");
+            Vec::new()
+        }
+    }
+}
+
+fn parse_release_notes_markdown(markdown: &str) -> Vec<ReleaseEntry> {
+    let mut entries = Vec::new();
+    let mut current_entry: Option<ReleaseEntry> = None;
+    let mut current_section: Option<ReleaseSection> = None;
+
+    for raw_line in markdown.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() {
+            continue;
+        }
+
+        if let Some(version) = line.strip_prefix("## ") {
+            if let Some(section) = current_section.take() {
+                if !section.items.is_empty() {
+                    if let Some(entry) = current_entry.as_mut() {
+                        entry.sections.push(section);
+                    }
+                }
+            }
+
+            if let Some(entry) = current_entry.take() {
+                if !entry.sections.is_empty() {
+                    entries.push(entry);
+                }
+            }
+
+            let version = version.trim();
+            let version = version
+                .strip_prefix('v')
+                .or_else(|| version.strip_prefix('V'))
+                .unwrap_or(version)
+                .to_string();
+            let anchor_id = release_anchor_id(&version);
+            current_entry = Some(ReleaseEntry {
+                version,
+                anchor_id,
+                sections: Vec::new(),
+            });
+            continue;
+        }
+
+        if let Some(title) = line.strip_prefix("### ") {
+            if current_entry.is_none() {
+                continue;
+            }
+
+            if let Some(section) = current_section.take() {
+                if !section.items.is_empty() {
+                    if let Some(entry) = current_entry.as_mut() {
+                        entry.sections.push(section);
+                    }
+                }
+            }
+
+            current_section = Some(ReleaseSection {
+                title: title.trim().to_string(),
+                items: Vec::new(),
+            });
+            continue;
+        }
+
+        if let Some(item) = line.strip_prefix("- ") {
+            if current_entry.is_none() {
+                continue;
+            }
+
+            if current_section.is_none() {
+                current_section = Some(ReleaseSection {
+                    title: "Changed".to_string(),
+                    items: Vec::new(),
+                });
+            }
+
+            if let Some(section) = current_section.as_mut() {
+                section.items.push(item.trim().to_string());
+            }
+        }
+    }
+
+    if let Some(section) = current_section {
+        if !section.items.is_empty() {
+            if let Some(entry) = current_entry.as_mut() {
+                entry.sections.push(section);
+            }
+        }
+    }
+
+    if let Some(entry) = current_entry {
+        if !entry.sections.is_empty() {
+            entries.push(entry);
+        }
+    }
+
+    entries
+}
+
+fn release_anchor_id(version: &str) -> String {
+    let mut anchor_id = String::from("v");
+
+    for character in version.chars() {
+        if character.is_ascii_alphanumeric() {
+            anchor_id.push(character.to_ascii_lowercase());
+        } else if !anchor_id.ends_with('-') {
+            anchor_id.push('-');
+        }
+    }
+
+    anchor_id.trim_end_matches('-').to_string()
 }
 
 fn absolute_url(site_url: &str, path: &str) -> String {
