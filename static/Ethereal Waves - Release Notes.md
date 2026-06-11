@@ -1,3 +1,19 @@
+## 0.7.1
+
+### Added
+- Added notifications through DBus.
+
+### Changed
+- Updated package version metadata for the 0.7.1 release.
+
+### Documentation
+- Marked Notifications through DBUS as complete in the README.
+
+## 0.7.0
+
+### Added
+- Now playing and playlist edit notifications through DBUS
+
 ## 0.6.0
 
 ### Added
