@@ -1,3 +1,12 @@
+## 0.7.3
+
+### Build
+- Added Flatpak build manifest and vendored Cargo source metadata for offline Flatpak builds.
+- Added AppStream/metainfo fixes for Flatpak packaging.
+
+### Changed
+- Updated package version metadata for the 0.7.3 release.
+
 ## 0.7.2
 
 ### Added
