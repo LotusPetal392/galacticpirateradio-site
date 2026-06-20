@@ -1,3 +1,14 @@
+## 0.7.2
+
+### Added
+- Added metadata syncing for user playlists after library updates.
+
+### Fixed
+- Fixed library update notification counts so added and removed track totals are based on the library state when the update started.
+
+### Changed
+- Updated package version metadata for the 0.7.2 release.
+
 ## 0.7.1
 
 ### Added
