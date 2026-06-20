@@ -73,7 +73,6 @@
     <div class="col-12 col-lg-8">
         <section class="card site-card shadow-sm border-0 h-100">
             <div class="card-body p-4 p-md-5">
-                <p class="eyebrow">Why people visit this page</p>
                 <h2 class="h4 fw-semibold mb-3">
                     What makes Ethereal Waves different
                 </h2>
@@ -87,8 +86,8 @@
                         Offers list and grid views for browsing music libraries
                     </li>
                     <li>
-                        Includes playlist tools, drag and drop support, and
-                        keyboard shortcuts
+                        Includes playlist tools, Wayland drag and drop support,
+                        and keyboard shortcuts
                     </li>
                     <li>
                         Actively evolving with changelog entries and roadmap
@@ -110,6 +109,29 @@
                     <li>FLAC</li>
                     <li>WAV</li>
                 </ul>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12">
+        <section class="card site-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                <p class="eyebrow">Known issues</p>
+                <h2 class="h4 fw-semibold mb-3">
+                    Desktop session compatibility
+                </h2>
+                <p class="mb-3">
+                    Ethereal Waves is recommended for Wayland-based desktops.
+                    Drag and drop does not currently work when running the app
+                    in an X11 session.
+                </p>
+                <p>
+                    Use a Wayland session, such as COSMIC Desktop, KDE Plasma
+                    (Wayland Session), or GNOME Wayland for the best
+                    drag-and-drop experience. On X11, use menus instead of drag
+                    and drop until X11 support is improved. This is a limitation
+                    of libcosmic and not an oversight of development.
+                </p>
             </div>
         </section>
     </div>
@@ -263,7 +285,7 @@ sudo just install</code></pre>
                     </li>
                     <li>
                         <span class="check-state is-done">Done</span> Drag and
-                        drop support
+                        drop support on Wayland
                     </li>
                     <li>
                         <span class="check-state is-done">Done</span> Playlist
