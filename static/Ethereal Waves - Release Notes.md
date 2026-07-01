@@ -1,3 +1,35 @@
+## 0.9.0
+
+### Changed
+- Modified the internal audio pipeline to support a shared GStreamer audio output for primary and secondary playback channels.
+- Updated footer visualizer sample handling for the shared audio output path.
+- Updated package version metadata for the 0.9.0 release.
+
+## 0.8.1
+
+### Improved
+- Added minimum and maximum alpha controls for the footer visualizer.
+- Adjusted the full footer visualizer layout so bars avoid the artwork area.
+
+## 0.8.0
+
+### Added
+- Added a preliminary footer audio visualizer.
+- Added settings for enabling the footer visualizer, choosing its bar count, and changing its color.
+- Added GStreamer spectrum analysis for visualizer sample data.
+
+### Changed
+- Updated package version metadata for the 0.8.0 release.
+
+## 0.7.4
+
+### Fixed
+- Fixed menu behavior on desktops outside COSMIC and Plasma by falling back to standard menus when surface menus are unavailable.
+
+### Changed
+- Added a minimum header menu width for more stable menu layout.
+- Updated package version metadata for the 0.7.4 release.
+
 ## 0.7.3
 
 ### Build
